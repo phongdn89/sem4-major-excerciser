@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Sem4.M3DemoServlet:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>Sem4.M3DemoServlet</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="Sem4.M3MajorExercises-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="Sem4.M3DemoServlet:war exploded" />
+    </root>
+  </artifact>
+</component>
