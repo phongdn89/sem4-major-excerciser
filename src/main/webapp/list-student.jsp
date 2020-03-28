@@ -33,21 +33,9 @@
                     </div>
                 </c:if>
             </div>
+            <%@include file="side-bar.jsp" %>
             <div class="page-container">
-                <div class="header navbar">
-                    <div class="header-container">
-                        <div class="mT-30">
-                            <form>
-                                <div class="form-group col-md-10" style="float: left">
-                                    <input type="text" name="search" class="form-control" id="search" placeholder="Tìm kiếm sinh viên">
-                                </div>
-                                <div class="col-md-2" style="float: left">
-                                    <input id="btnSearch"  type="button" class="btn btn-primary" value="Submit"/>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                <%@include file="header.jsp" %>
                 <main class="main-content bgc-grey-100">
                     <div id="mainContent">
                         <div class="container-fluid">
@@ -127,6 +115,7 @@
         <script type="text/javascript" src="<%=request.getContextPath()%>/js/pagination.min.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/js/vendor.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/js/bundle.js"></script>
+        <script type="text/javascript" src="<%=request.getContextPath()%>/js/dropdown.js"></script>
         <script type="text/javascript">
                             $(document).ready(function () {
 
@@ -240,7 +229,17 @@
                                     }
 
                                 });
-
+//
+//                                $("#click-dropdown").hover(function () {
+//                                    $('#a-true').attr("aria-expanded", true);
+//                                    $('#click-dropdown').addClass('show');
+//                                    $('#logout').addClass('show');
+//                                }, function () {
+//                                    $('#a-true').attr("aria-expanded", false);
+//                                    $('#click-dropdown').removeClass('show');
+//                                    $('#logout').removeClass('show');
+//                                });
+                                
                             });
 
                             function deleteRow(a) {

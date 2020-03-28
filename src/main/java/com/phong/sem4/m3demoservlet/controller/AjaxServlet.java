@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.phong.sem4.m3demoservlet.dao.StudentDao;
 import com.phong.sem4.m3demoservlet.dao.StudentDaoImpl;
 import com.phong.sem4.m3demoservlet.entity.Student;
+import com.phong.sem4.m3demoservlet.entity.User;
 import com.phong.sem4.m3demoservlet.model.ResponseRest;
 import com.phong.sem4.m3demoservlet.model.ResponseRestStudent;
 import java.io.IOException;
@@ -19,6 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -31,6 +33,12 @@ public class AjaxServlet extends HttpServlet {
             throws ServletException, IOException {
         Gson g = new Gson();
         try {
+            HttpSession session = request.getSession();
+            User userSession = (User) session.getAttribute("session");
+            if (userSession == null) {
+                response.sendRedirect("login");
+                return;
+            }
             String pageParam = request.getParameter("page");
             String rowPerPageParam = request.getParameter("rowPerPage");
             String key = request.getParameter("key");
@@ -93,7 +101,6 @@ public class AjaxServlet extends HttpServlet {
 //        }
 //
 //    }
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

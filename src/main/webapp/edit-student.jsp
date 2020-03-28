@@ -18,8 +18,10 @@
         <%@include file="loading.jsp" %>
 
         <div>
+            <%@include file="side-bar.jsp" %>
             <div class="page-container">
                 <!--<div class="masonry-item col-md-6" style="position: absolute; left: 50%; top: 0px;">-->
+                <%@include file="header.jsp" %>
                 <div class="bgc-white p-20 bd">
                     <h6 class="c-grey-900">Sửa sinh viên</h6>
                     <div class="col-md-12 ">
@@ -110,6 +112,7 @@
         <script type="text/javascript" src="<%=request.getContextPath()%>/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/js/vendor.js"></script>
         <script type="text/javascript" src="<%=request.getContextPath()%>/js/bundle.js"></script>
+        <script type="text/javascript" src="<%=request.getContextPath()%>/js/dropdown.js"></script>
     </body>
     <script type="text/javascript">
                                     $(document).ready(function () {
@@ -123,6 +126,9 @@
                                             $(idModalAlert + ' .btn-secondary').html(btnClose);
                                             $(idModalAlert).modal('show');
                                         }
+                                        
+                                        $('#search').hide();
+                                        $('#btnSearch').hide();
 
                                     });
 

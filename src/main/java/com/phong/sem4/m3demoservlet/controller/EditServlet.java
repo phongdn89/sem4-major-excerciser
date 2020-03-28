@@ -9,6 +9,7 @@ import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 import com.phong.sem4.m3demoservlet.dao.StudentDao;
 import com.phong.sem4.m3demoservlet.dao.StudentDaoImpl;
 import com.phong.sem4.m3demoservlet.entity.Student;
+import com.phong.sem4.m3demoservlet.entity.User;
 import com.phong.sem4.m3demoservlet.model.RequestFormStudent;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -29,6 +30,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 /**
@@ -45,6 +47,12 @@ public class EditServlet extends HttpServlet {
             throws ServletException, IOException {
 
         try {
+            HttpSession session = request.getSession();
+            User userSession = (User) session.getAttribute("session");
+            if (userSession == null) {
+                response.sendRedirect("login");
+                return;
+            }
             String stdId = request.getParameter("id");
             int idNum = Integer.parseInt(stdId);
             Student findStudent = dao.findStudent(idNum);

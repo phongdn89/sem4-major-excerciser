@@ -1,1 +1,0 @@
-<footer class="bdT ta-c p-30 lh-0 fsz-sm c-grey-600"><span>Đặng Ngọc Phong</span></footer>

@@ -6,10 +6,12 @@
 package com.phong.sem4.m3demoservlet.controller;
 
 import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
+import com.phong.sem4.m3demoservlet.controller.utils.CommonUtils;
 import java.io.File;
 import com.phong.sem4.m3demoservlet.dao.StudentDao;
 import com.phong.sem4.m3demoservlet.dao.StudentDaoImpl;
 import com.phong.sem4.m3demoservlet.entity.Student;
+import com.phong.sem4.m3demoservlet.entity.User;
 import com.phong.sem4.m3demoservlet.model.RequestFormStudent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -28,6 +30,7 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 /**
@@ -42,8 +45,13 @@ public class StudentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        response.sendRedirect("create-student.jsp");
+        HttpSession session = request.getSession();
+        User userSession = (User) session.getAttribute("session");
+        if (userSession == null) {
+            response.sendRedirect("login");
+        } else {
+            response.sendRedirect("create-student.jsp");
+        }
 
     }
 
@@ -52,6 +60,13 @@ public class StudentServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
+
+        HttpSession session = request.getSession();
+        if (session == null) {
+            response.sendRedirect("login");
+            return;
+        }
+
         RequestFormStudent form = new RequestFormStudent();
         form.setName(request.getParameter("name"));
         form.setCode(request.getParameter("code"));
@@ -155,10 +170,10 @@ public class StudentServlet extends HttpServlet {
 
     private String validateRequestParams(RequestFormStudent request) {
         StringBuilder msg = new StringBuilder("");
-        if (checkStringEmpty(request.getName())) {
+        if (CommonUtils.checkStringEmpty(request.getName())) {
             msg.append("Full name is empty!");
         }
-        if (checkStringEmpty(request.getCode())) {
+        if (CommonUtils.checkStringEmpty(request.getCode())) {
             msg.append("<br/>Code student is empty!");
         }
 //        else {
@@ -170,14 +185,14 @@ public class StudentServlet extends HttpServlet {
 //
 //            }
 //        }
-        if (checkStringEmpty(request.getBirthDay())) {
+        if (CommonUtils.checkStringEmpty(request.getBirthDay())) {
             msg.append("<br/>Birth date student is empty!");
         } else if (!isValidDateddMMyyyy(request.getBirthDay())) {
             msg.append("<br/>Birth date format invalid!");
         } else if (Integer.parseInt(request.getBirthDay().split("/")[2]) >= Calendar.getInstance().get(Calendar.YEAR)) {
             msg.append("<br/>Birth year invalid!");
         }
-        if (checkStringEmpty(request.getAddress())) {
+        if (CommonUtils.checkStringEmpty(request.getAddress())) {
             msg.append("<br/>Address student is empty!");
         }
         if (!request.getPhone().matches("\\d{10,12}")) {
@@ -201,10 +216,6 @@ public class StudentServlet extends HttpServlet {
             msg.append("<br/>File format is't image !");
         }
         return msg.toString();
-    }
-
-    private boolean checkStringEmpty(String name) {
-        return name.isEmpty() || name.equals("") || name == null;
     }
 
     public boolean isValidDateddMMyyyy(String dateStr) {

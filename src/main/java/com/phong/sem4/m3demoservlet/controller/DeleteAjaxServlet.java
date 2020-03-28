@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.phong.sem4.m3demoservlet.dao.StudentDao;
 import com.phong.sem4.m3demoservlet.dao.StudentDaoImpl;
 import com.phong.sem4.m3demoservlet.entity.Student;
+import com.phong.sem4.m3demoservlet.entity.User;
 import com.phong.sem4.m3demoservlet.model.ResponseRest;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,6 +17,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -29,6 +31,12 @@ public class DeleteAjaxServlet extends HttpServlet {
         Gson g = new Gson();
         StudentDao dao = new StudentDaoImpl();
         try {
+            HttpSession session = request.getSession();
+            User userSession = (User) session.getAttribute("session");
+            if (userSession == null) {
+                resp.sendRedirect("login");
+                return;
+            }
             String idParam = request.getParameter("id_student");
             String tParam = request.getParameter("dmmay:");
             System.out.println(tParam + "===============");
